@@ -1,0 +1,7 @@
+# ninja log v5
+30	2440	1728903157507293196	CMakeFiles/MyHackrf.dir/src/general.cpp.o	a25a710cfef03037
+30	2495	1728903157580295456	CMakeFiles/MyHackrf.dir/src/main.cpp.o	c5c287ecd4f2d634
+711	1507	1727086773388678614	MyHackrf	3787495f363e660d
+2496	4530	1728903159613358366	MyHackrfd	3ca9186c2b58ff1d
+30	2439	1728903157507293196	CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o	8d915a20b6d645ca
+30	2440	1728903157509293258	CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o	c1d5fe70d873ba1b

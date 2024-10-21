@@ -1,0 +1,26 @@
+[
+{
+  "directory": "/home/user/Рабочий стол/MyHackrf/build",
+  "command": "/usr/bin/g++ -I\"/home/user/Рабочий стол/MyHackrf/inc\" -I\"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc\" -g -std=gnu++23 -o CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o -c \"/home/user/Рабочий стол/MyHackrf/src/Detecter.cpp\"",
+  "file": "/home/user/Рабочий стол/MyHackrf/src/Detecter.cpp",
+  "output": "CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o"
+},
+{
+  "directory": "/home/user/Рабочий стол/MyHackrf/build",
+  "command": "/usr/bin/g++ -I\"/home/user/Рабочий стол/MyHackrf/inc\" -I\"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc\" -g -std=gnu++23 -o CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o -c \"/home/user/Рабочий стол/MyHackrf/src/Receiver.cpp\"",
+  "file": "/home/user/Рабочий стол/MyHackrf/src/Receiver.cpp",
+  "output": "CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o"
+},
+{
+  "directory": "/home/user/Рабочий стол/MyHackrf/build",
+  "command": "/usr/bin/g++ -I\"/home/user/Рабочий стол/MyHackrf/inc\" -I\"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc\" -g -std=gnu++23 -o CMakeFiles/MyHackrf.dir/src/general.cpp.o -c \"/home/user/Рабочий стол/MyHackrf/src/general.cpp\"",
+  "file": "/home/user/Рабочий стол/MyHackrf/src/general.cpp",
+  "output": "CMakeFiles/MyHackrf.dir/src/general.cpp.o"
+},
+{
+  "directory": "/home/user/Рабочий стол/MyHackrf/build",
+  "command": "/usr/bin/g++ -I\"/home/user/Рабочий стол/MyHackrf/inc\" -I\"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc\" -g -std=gnu++23 -o CMakeFiles/MyHackrf.dir/src/main.cpp.o -c \"/home/user/Рабочий стол/MyHackrf/src/main.cpp\"",
+  "file": "/home/user/Рабочий стол/MyHackrf/src/main.cpp",
+  "output": "CMakeFiles/MyHackrf.dir/src/main.cpp.o"
+}
+]
