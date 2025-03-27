@@ -63,6 +63,14 @@
         "cinttypes": "cpp",
         "typeindex": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "fstream": "cpp",
+        "map": "cpp",
+        "iostream": "cpp",
+        "ranges": "cpp"
+    },
+    "files.watcherExclude": {
+        "**/target": true
+    },
+    "C_Cpp.formatting": "vcFormat"
 }

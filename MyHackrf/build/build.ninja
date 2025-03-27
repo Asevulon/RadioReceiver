@@ -12,7 +12,7 @@
 
 # =============================================================================
 # Project: MyHackrf
-# Configurations: Debug
+# Configurations: Release
 # =============================================================================
 
 #############################################
@@ -24,7 +24,7 @@ ninja_required_version = 1.5
 #############################################
 # Set configuration variable for custom commands.
 
-CONFIGURATION = Debug
+CONFIGURATION = Release
 # =============================================================================
 # Include auxiliary files.
 
@@ -39,7 +39,7 @@ include CMakeFiles/rules.ninja
 #############################################
 # Logical path to working directory; prefix for absolute paths.
 
-cmake_ninja_workdir = /home/user/Рабочий$ стол/MyHackrf/build/
+cmake_ninja_workdir = /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build/
 # =============================================================================
 # Object build statements for EXECUTABLE target MyHackrf
 
@@ -49,31 +49,38 @@ cmake_ninja_workdir = /home/user/Рабочий$ стол/MyHackrf/build/
 
 build cmake_object_order_depends_target_MyHackrf: phony || CMakeFiles/MyHackrf.dir
 
-build CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Debug /home/user/Рабочий$ стол/MyHackrf/src/Detecter.cpp || cmake_object_order_depends_target_MyHackrf
+build CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Release /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/src/Detecter.cpp || cmake_object_order_depends_target_MyHackrf
   DEP_FILE = CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o.d
-  FLAGS = -g -std=gnu++23
-  INCLUDES = -I"/home/user/Рабочий стол/MyHackrf/inc" -I"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc"
+  FLAGS = -O3 -DNDEBUG -std=gnu++23
+  INCLUDES = -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/inc -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/inc
   OBJECT_DIR = CMakeFiles/MyHackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/MyHackrf.dir/src
 
-build CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Debug /home/user/Рабочий$ стол/MyHackrf/src/Receiver.cpp || cmake_object_order_depends_target_MyHackrf
+build CMakeFiles/MyHackrf.dir/src/Journal.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Release /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/src/Journal.cpp || cmake_object_order_depends_target_MyHackrf
+  DEP_FILE = CMakeFiles/MyHackrf.dir/src/Journal.cpp.o.d
+  FLAGS = -O3 -DNDEBUG -std=gnu++23
+  INCLUDES = -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/inc -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/inc
+  OBJECT_DIR = CMakeFiles/MyHackrf.dir
+  OBJECT_FILE_DIR = CMakeFiles/MyHackrf.dir/src
+
+build CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Release /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/src/Receiver.cpp || cmake_object_order_depends_target_MyHackrf
   DEP_FILE = CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o.d
-  FLAGS = -g -std=gnu++23
-  INCLUDES = -I"/home/user/Рабочий стол/MyHackrf/inc" -I"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc"
+  FLAGS = -O3 -DNDEBUG -std=gnu++23
+  INCLUDES = -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/inc -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/inc
   OBJECT_DIR = CMakeFiles/MyHackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/MyHackrf.dir/src
 
-build CMakeFiles/MyHackrf.dir/src/general.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Debug /home/user/Рабочий$ стол/MyHackrf/src/general.cpp || cmake_object_order_depends_target_MyHackrf
+build CMakeFiles/MyHackrf.dir/src/general.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Release /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/src/general.cpp || cmake_object_order_depends_target_MyHackrf
   DEP_FILE = CMakeFiles/MyHackrf.dir/src/general.cpp.o.d
-  FLAGS = -g -std=gnu++23
-  INCLUDES = -I"/home/user/Рабочий стол/MyHackrf/inc" -I"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc"
+  FLAGS = -O3 -DNDEBUG -std=gnu++23
+  INCLUDES = -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/inc -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/inc
   OBJECT_DIR = CMakeFiles/MyHackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/MyHackrf.dir/src
 
-build CMakeFiles/MyHackrf.dir/src/main.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Debug /home/user/Рабочий$ стол/MyHackrf/src/main.cpp || cmake_object_order_depends_target_MyHackrf
+build CMakeFiles/MyHackrf.dir/src/main.cpp.o: CXX_COMPILER__MyHackrf_unscanned_Release /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/src/main.cpp || cmake_object_order_depends_target_MyHackrf
   DEP_FILE = CMakeFiles/MyHackrf.dir/src/main.cpp.o.d
-  FLAGS = -g -std=gnu++23
-  INCLUDES = -I"/home/user/Рабочий стол/MyHackrf/inc" -I"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/inc"
+  FLAGS = -O3 -DNDEBUG -std=gnu++23
+  INCLUDES = -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/inc -I/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/inc
   OBJECT_DIR = CMakeFiles/MyHackrf.dir
   OBJECT_FILE_DIR = CMakeFiles/MyHackrf.dir/src
 
@@ -83,23 +90,23 @@ build CMakeFiles/MyHackrf.dir/src/main.cpp.o: CXX_COMPILER__MyHackrf_unscanned_D
 
 
 #############################################
-# Link the executable MyHackrfd
+# Link the executable MyHackrf
 
-build MyHackrfd: CXX_EXECUTABLE_LINKER__MyHackrf_Debug CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o CMakeFiles/MyHackrf.dir/src/general.cpp.o CMakeFiles/MyHackrf.dir/src/main.cpp.o | /home/user/Рабочий$ стол/MyHackrf/libs/comphackrf/build/libhackrf.so
-  FLAGS = -g
-  LINK_LIBRARIES = -Wl,-rpath,"/home/user/Рабочий стол/MyHackrf/libs/comphackrf/build"  "/home/user/Рабочий стол/MyHackrf/libs/comphackrf/build/libhackrf.so"  -lpthread  -lpthread
+build MyHackrf: CXX_EXECUTABLE_LINKER__MyHackrf_Release CMakeFiles/MyHackrf.dir/src/Detecter.cpp.o CMakeFiles/MyHackrf.dir/src/Journal.cpp.o CMakeFiles/MyHackrf.dir/src/Receiver.cpp.o CMakeFiles/MyHackrf.dir/src/general.cpp.o CMakeFiles/MyHackrf.dir/src/main.cpp.o | /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/build/libhackrf.so
+  FLAGS = -O3 -DNDEBUG
+  LINK_LIBRARIES = -Wl,-rpath,/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/build  /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/libs/comphackrf/build/libhackrf.so  -lpthread  -lpthread
   OBJECT_DIR = CMakeFiles/MyHackrf.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = MyHackrfd
-  TARGET_PDB = MyHackrfd.dbg
+  TARGET_FILE = MyHackrf
+  TARGET_PDB = MyHackrf.dbg
 
 
 #############################################
 # Utility command for edit_cache
 
 build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd "/home/user/Рабочий стол/MyHackrf/build" && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  COMMAND = cd /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
   DESC = No interactive CMake dialog available...
   restat = 1
 
@@ -110,7 +117,7 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 # Utility command for rebuild_cache
 
 build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd "/home/user/Рабочий стол/MyHackrf/build" && /usr/bin/cmake --regenerate-during-build -S"/home/user/Рабочий стол/MyHackrf" -B"/home/user/Рабочий стол/MyHackrf/build"
+  COMMAND = cd /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build && /usr/bin/cmake --regenerate-during-build -S/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf -B/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build
   DESC = Running CMake to regenerate build system...
   pool = console
   restat = 1
@@ -120,17 +127,15 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build MyHackrf: phony MyHackrfd
-
 # =============================================================================
 # Folder targets.
 
 # =============================================================================
 
 #############################################
-# Folder: /home/user/Рабочий стол/MyHackrf/build
+# Folder: /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build
 
-build all: phony MyHackrfd
+build all: phony MyHackrf
 
 # =============================================================================
 # Built-in targets
@@ -139,14 +144,14 @@ build all: phony MyHackrfd
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/user/Рабочий$ стол/MyHackrf/CMakeLists.txt /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.28/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.28/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.28/Modules/FindPackageMessage.cmake /usr/share/cmake-3.28/Modules/FindThreads.cmake /usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/CMakeLists.txt /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.28/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.28/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.28/Modules/FindPackageMessage.cmake /usr/share/cmake-3.28/Modules/FindThreads.cmake /usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/user/Рабочий$ стол/MyHackrf/CMakeLists.txt /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.28/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.28/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.28/Modules/FindPackageMessage.cmake /usr/share/cmake-3.28/Modules/FindThreads.cmake /usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake: phony
+build /home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/CMakeLists.txt /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/CheckCSourceCompiles.cmake /usr/share/cmake-3.28/Modules/CheckIncludeFile.cmake /usr/share/cmake-3.28/Modules/CheckLibraryExists.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-C.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake-3.28/Modules/FindPackageMessage.cmake /usr/share/cmake-3.28/Modules/FindThreads.cmake /usr/share/cmake-3.28/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake: phony
 
 
 #############################################
