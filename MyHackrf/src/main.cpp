@@ -68,23 +68,7 @@ const int IF = 16;
 
 int main(int argc, char** argv)
 {
-    if (argc != 2) return 0;
-
-    Journal journal;
-    journal
-        .Path(argv[1])
-        .Start({ "first", "second", "anume" })
-        .Set("first", "q")
-        .Set("second", "w")
-        .Set(3, "ANUME")
-        .Print()
-        .Print()
-        .Set(1, "a")
-        .Set(2, "b")
-        .Set("anume", "Anume?")
-        .Print()
-        .End();
-    /* atexit(ExitHandler);
+atexit(ExitHandler);
 Receiver rec;
 rec.SetAmplify(IF);
 rec.SetFrequency(frequency);

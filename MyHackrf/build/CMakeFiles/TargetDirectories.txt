@@ -1,3 +1,3 @@
-/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build/CMakeFiles/MyHackrf.dir
-/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build/CMakeFiles/edit_cache.dir
-/home/dm-krasov/source/repos/Maga/RadioReceiver/MyHackrf/build/CMakeFiles/rebuild_cache.dir
+/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/rebuild_cache.dir
+/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/edit_cache.dir
+/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/MyHackrf.dir
