@@ -1,3 +1,0 @@
-/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/rebuild_cache.dir
-/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/edit_cache.dir
-/home/pi/workspace/RadioReceiver/MyHackrf/build/CMakeFiles/MyHackrf.dir
