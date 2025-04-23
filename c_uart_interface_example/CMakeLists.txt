@@ -15,7 +15,10 @@ set(SOURCES
     mavlink_control.cpp
     serial_port.cpp
     udp_port.cpp
-    MyHackrf/src/*.cpp
+    MyHackrf/src/Detecter.cpp
+    MyHackrf/src/general.cpp
+    MyHackrf/src/Journal.cpp
+    MyHackrf/src/Receiver.cpp
 )
 
 include_directories(MyHackrf/inc)
@@ -35,5 +38,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
 
+
+
 target_include_directories(${PROJECT_NAME} PRIVATE mavlink/include/mavlink/v2.0)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)

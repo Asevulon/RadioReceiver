@@ -54,7 +54,35 @@
 // ------------------------------------------------------------------------------
 
 #include "mavlink_control.h"
+#include "hackrf.h"
+#include "general.h"
+#include <math.h>
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+#include <complex.h>
+#include <stdint.h>
+#include "Receiver.h"
+#include "Journal.h"
 
+hackrf_device* device = NULL;
+int result = 0;
+bool ExitReached = false;
+void ExitHandler()
+{
+    if (ExitReached)return;
+    result = hackrf_stop_rx(device);
+    ErrorHandler(result);
+    result = hackrf_close(device);
+    ErrorHandler(result);
+    result = hackrf_exit();
+    ErrorHandler(result);
+}
+
+const int samplerate = 8e6;
+const int frequency = 935e6;
+const int BB = 20;
+const int IF = 16;
 
 // ------------------------------------------------------------------------------
 //   TOP
@@ -456,6 +484,17 @@ quit_handler( int sig )
 int
 main(int argc, char **argv)
 {
+	atexit(ExitHandler);
+    Receiver rec;
+    rec.SetAmplify(IF);
+    rec.SetFrequency(frequency);
+    rec.SetSamplerate(samplerate);
+    rec.StartRX();
+    sleep(1);
+    std::vector<double> data = rec.GetData();
+    rec.StopRX();
+    PrintSignal(data);
+
 	// This program uses throw, wrap one big try/catch here
 	try
 	{

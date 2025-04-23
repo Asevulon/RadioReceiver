@@ -49,10 +49,10 @@ if not isLibBuilded():
     os.system(f"cp libhackrf.so.0 {root}{hackrfPath}")
     os.system(f"cp libhackrf.so.0.9.0 {root}{hackrfPath}")
 
-os.chdir(root)
-if not os.path.isdir("build"):
-    os.mkdir("build")
-os.chdir("build")
-os.system("cmake ..")
-os.system("make")
+#os.chdir(root)
+#if not os.path.isdir("build"):
+#    os.mkdir("build")
+#os.chdir("build")
+#os.system("cmake ..")
+#os.system("make")
 

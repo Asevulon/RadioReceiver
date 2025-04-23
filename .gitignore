@@ -1,2 +1,4 @@
 MyHackrf/build/*
 MyHackrf/libs/comphackrf/build/*
+ext/
+build/
