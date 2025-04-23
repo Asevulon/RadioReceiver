@@ -11,7 +11,7 @@ include_directories(libs/comphackrf/inc)
 
 find_library(HACKRF_LIB NAMES hackrf PATHS "libs/comphackrf/build" NO_DEFAULT_PATH)
 
-project(MyHackrf)
+project(MyHackrf CXX)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 

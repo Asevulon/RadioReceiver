@@ -66,49 +66,52 @@ const int frequency = 935e6;
 const int BB = 20;
 const int IF = 16;
 
+/*
 int main(int argc, char** argv)
 {
-atexit(ExitHandler);
-Receiver rec;
-rec.SetAmplify(IF);
-rec.SetFrequency(frequency);
-rec.SetSamplerate(samplerate);
-rec.StartRX();
-sleep(1);
-std::vector<double> data = rec.GetData();
-rec.StopRX();
-PrintSignal(data);
-/*result = hackrf_init();
-ErrorHandler(result);
-result = hackrf_open(&device);
-ErrorHandler(result);
+    atexit(ExitHandler);
+    Receiver rec;
+    rec.SetAmplify(IF);
+    rec.SetFrequency(frequency);
+    rec.SetSamplerate(samplerate);
+    rec.StartRX();
+    sleep(1);
+    std::vector<double> data = rec.GetData();
+    rec.StopRX();
+    PrintSignal(data);
+    /*result = hackrf_init();
+    ErrorHandler(result);
+    result = hackrf_open(&device);
+    ErrorHandler(result);
 
-result = hackrf_set_sample_rate(device, samplerate);
-ErrorHandler(result);
+    result = hackrf_set_sample_rate(device, samplerate);
+    ErrorHandler(result);
 
-result = hackrf_set_freq(device, frequency);
-ErrorHandler(result);
+    result = hackrf_set_freq(device, frequency);
+    ErrorHandler(result);
 
-result = hackrf_set_vga_gain(device, BB);
-ErrorHandler(result);
+    result = hackrf_set_vga_gain(device, BB);
+    ErrorHandler(result);
 
-result = hackrf_set_lna_gain(device, IF);
-ErrorHandler(result);
+    result = hackrf_set_lna_gain(device, IF);
+    ErrorHandler(result);
 
-result = hackrf_set_amp_enable(device, 1);
-ErrorHandler(result);
+    result = hackrf_set_amp_enable(device, 1);
+    ErrorHandler(result);
 
-result = hackrf_start_rx(device, transfer_callback, NULL);
-ErrorHandler(result);
+    result = hackrf_start_rx(device, transfer_callback, NULL);
+    ErrorHandler(result);
 
-sleep(1000);
+    sleep(1000);
 
-result = hackrf_stop_rx(device);
-ErrorHandler(result);
-result = hackrf_close(device);
-ErrorHandler(result);
-result = hackrf_exit();
-ErrorHandler(result);
-ExitReached = true; */
+    result = hackrf_stop_rx(device);
+    ErrorHandler(result);
+    result = hackrf_close(device);
+    ErrorHandler(result);
+    result = hackrf_exit();
+    ErrorHandler(result);
+    ExitReached = true; // 
     return 0;
 }
+
+*/
