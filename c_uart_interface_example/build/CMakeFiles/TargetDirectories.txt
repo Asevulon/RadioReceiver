@@ -1,0 +1,3 @@
+/home/user/project/RadioReceiver/c_uart_interface_example/build/CMakeFiles/c_uart_interface_example.dir
+/home/user/project/RadioReceiver/c_uart_interface_example/build/CMakeFiles/edit_cache.dir
+/home/user/project/RadioReceiver/c_uart_interface_example/build/CMakeFiles/rebuild_cache.dir
