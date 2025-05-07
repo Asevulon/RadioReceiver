@@ -5,6 +5,7 @@ project(c_uart_interface_example CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+
 set(CMAKE_FIND_LIBRARY_PREFIXES "lib")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".so;.a")
 set(CMAKE_EXECUTABLE_SUFFIX ".bin")
@@ -19,12 +20,15 @@ set(SOURCES
     MyHackrf/src/general.cpp
     MyHackrf/src/Journal.cpp
     MyHackrf/src/Receiver.cpp
-)
+    )
+
+find_package(OpenCV REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+link_libraries( ${OpenCV_LIBS})
 
 include_directories(MyHackrf/inc)
 include_directories(MyHackrf/libs/comphackrf/inc)
 include_directories(CameraLib)
-include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 find_library(HACKRF_LIB NAMES hackrf PATHS "MyHackrf/libs/comphackrf/build" NO_DEFAULT_PATH)
 
@@ -36,12 +40,10 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
-find_package( OpenCV REQUIRED )
 target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
 target_link_libraries(${PROJECT_NAME} PUBLIC "CameraLib/libcamera")
-target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )
 
 
 
