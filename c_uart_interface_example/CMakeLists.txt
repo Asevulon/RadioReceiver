@@ -5,16 +5,10 @@ project(c_uart_interface_example CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
 set(CMAKE_FIND_LIBRARY_PREFIXES "lib")
 set(CMAKE_FIND_LIBRARY_SUFFIXES ".so;.a")
 set(CMAKE_EXECUTABLE_SUFFIX ".bin")
 set(CMAKE_DEBUG_POSTFIX d)
-
-include_directories(MyHackrf/inc)
-include_directories(MyHackrf/libs/comphackrf/inc)
-include_directories(CameraLib)
-
 
 set(SOURCES
     autopilot_interface.cpp
@@ -25,12 +19,10 @@ set(SOURCES
     MyHackrf/src/general.cpp
     MyHackrf/src/Journal.cpp
     MyHackrf/src/Receiver.cpp
-    )
+)
 
-find_package(OpenCV REQUIRED)
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-link_libraries( ${OpenCV_LIBS})
-
+include_directories(MyHackrf/inc)
+include_directories(MyHackrf/libs/comphackrf/inc)
 
 find_library(HACKRF_LIB NAMES hackrf PATHS "MyHackrf/libs/comphackrf/build" NO_DEFAULT_PATH)
 
@@ -45,7 +37,6 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
-#target_link_libraries(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 
 
