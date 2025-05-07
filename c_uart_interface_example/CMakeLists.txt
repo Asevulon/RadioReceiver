@@ -23,6 +23,7 @@ set(SOURCES
 
 include_directories(MyHackrf/inc)
 include_directories(MyHackrf/libs/comphackrf/inc)
+include_directories(CameraLib)
 
 find_library(HACKRF_LIB NAMES hackrf PATHS "MyHackrf/libs/comphackrf/build" NO_DEFAULT_PATH)
 
@@ -37,6 +38,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
+target_link_libraries(${PROJECT_NAME} PUBLIC "CameraLib/libcamera")
 
 
 

@@ -47,8 +47,6 @@
  *
  */
 
-
-
 // ------------------------------------------------------------------------------
 //   Includes
 // ------------------------------------------------------------------------------
@@ -62,33 +60,37 @@
 #include <unistd.h>
 #include <complex.h>
 #include <stdint.h>
+
+#include "camera.h"
 #include "Receiver.h"
 #include "Journal.h"
+#include "Detecter.h"
 
-hackrf_device* device = NULL;
+thread *detecterThread{nullptr};
+hackrf_device *device = NULL;
 int result = 0;
 bool ExitReached = false;
 void ExitHandler()
 {
-    if (ExitReached)return;
-    result = hackrf_stop_rx(device);
-    ErrorHandler(result);
-    result = hackrf_close(device);
-    ErrorHandler(result);
-    result = hackrf_exit();
-    ErrorHandler(result);
+	if (ExitReached)
+		return;
+	result = hackrf_stop_rx(device);
+	ErrorHandler(result);
+	result = hackrf_close(device);
+	ErrorHandler(result);
+	result = hackrf_exit();
+	ErrorHandler(result);
 }
 
 const int samplerate = 8e6;
 const int frequency = 935e6;
 const int BB = 20;
 const int IF = 16;
-
+const double detecterThreshold = 1;
 // ------------------------------------------------------------------------------
 //   TOP
 // ------------------------------------------------------------------------------
-int
-top (int argc, char **argv)
+int top(int argc, char **argv)
 {
 
 	// --------------------------------------------------------------------------
@@ -97,20 +99,19 @@ top (int argc, char **argv)
 
 	// Default input arguments
 #ifdef __APPLE__
-	char *uart_name = (char*)"/dev/tty.usbmodem1";
+	char *uart_name = (char *)"/dev/tty.usbmodem1";
 #else
-	char *uart_name = (char*)"/dev/ttyUSB0";
+	char *uart_name = (char *)"/dev/ttyUSB0";
 #endif
 	int baudrate = 57600;
 
 	bool use_udp = false;
-	char *udp_ip = (char*)"127.0.0.1";
+	char *udp_ip = (char *)"127.0.0.1";
 	int udp_port = 14540;
 	bool autotakeoff = false;
 
 	// do the parse, will throw an int if it fails
-	//parse_commandline(argc, argv, uart_name, baudrate, use_udp, udp_ip, udp_port, autotakeoff);
-
+	// parse_commandline(argc, argv, uart_name, baudrate, use_udp, udp_ip, udp_port, autotakeoff);
 
 	// --------------------------------------------------------------------------
 	//   PORT and THREAD STARTUP
@@ -127,7 +128,7 @@ top (int argc, char **argv)
 	 *
 	 */
 	Generic_Port *port;
-	if(use_udp)
+	if (use_udp)
 	{
 		port = new UDP_Port(udp_ip, udp_port);
 	}
@@ -135,7 +136,6 @@ top (int argc, char **argv)
 	{
 		port = new Serial_Port(uart_name, baudrate);
 	}
-
 
 	/*
 	 * Instantiate an autopilot interface object
@@ -162,9 +162,9 @@ top (int argc, char **argv)
 	 * The handler in this example needs references to the above objects.
 	 *
 	 */
-	port_quit         = port;
+	port_quit = port;
 	autopilot_interface_quit = &autopilot_interface;
-	signal(SIGINT,quit_handler);
+	signal(SIGINT, quit_handler);
 
 	/*
 	 * Start the port and autopilot_interface
@@ -172,7 +172,6 @@ top (int argc, char **argv)
 	 */
 	port->start();
 	autopilot_interface.start();
-
 
 	// --------------------------------------------------------------------------
 	//   RUN COMMANDS
@@ -182,7 +181,6 @@ top (int argc, char **argv)
 	 * Now we can implement the algorithm we want on top of the autopilot interface
 	 */
 	commands(autopilot_interface, autotakeoff);
-
 
 	// --------------------------------------------------------------------------
 	//   THREAD and PORT SHUTDOWN
@@ -202,16 +200,13 @@ top (int argc, char **argv)
 
 	// woot!
 	return 0;
-
 }
-
 
 // ------------------------------------------------------------------------------
 //   COMMANDS
 // ------------------------------------------------------------------------------
 
-void
-commands(Autopilot_Interface &api, bool autotakeoff)
+void commands(Autopilot_Interface &api, bool autotakeoff)
 {
 
 	// // --------------------------------------------------------------------------
@@ -241,9 +236,6 @@ commands(Autopilot_Interface &api, bool autotakeoff)
 
 	// // autopilot_interface.h provides some helper functions to build the command
 
-
-
-
 	// // Example 1 - Fly up by to 2m
 	// set_position( ip.x ,       // [m]
 	// 		 	  ip.y ,       // [m]
@@ -266,7 +258,6 @@ commands(Autopilot_Interface &api, bool autotakeoff)
 	// 	printf("%i CURRENT POSITION XYZ = [ % .4f , % .4f , % .4f ] \n", i, pos.x, pos.y, pos.z);
 	// 	sleep(1);
 	// }
-
 
 	// // Example 2 - Set Velocity
 	// set_velocity( -1.0       , // [m/s]
@@ -327,120 +318,179 @@ commands(Autopilot_Interface &api, bool autotakeoff)
 
 	// now pixhawk isn't listening to setpoint commands
 
-
 	// --------------------------------------------------------------------------
 	//   GET A MESSAGE
 	// --------------------------------------------------------------------------
-	printf("READ SOME MESSAGES \n");
+
+	Receiver rec;
+	SignalEnergyDetecter det;
+	Journal jour;
+
+	camera_init();
+
+	jour.Path("journal.txt");
+	jour.Start(
+		{"t",
+		 "x",
+		 "y",
+		 "z",
+		 "vx",
+		 "vy",
+		 "vz"});
+
+	det.SetThreshold(detecterThreshold);
+	rec.SetAmplify(IF);
+	rec.SetFrequency(frequency);
+	rec.SetSamplerate(samplerate);
+	rec.StartRX();
+	sleep(1);
+	while (true)
+	{
+		std::vector<double> data = rec.GetData();
+		det.SetData(data);
+		det.ProcessData();
+		if (det.GetLastResult())
+		{
+			camera_save_image("123.png");
+
+			mavlink_local_position_ned_t pos = messages.local_position_ned;
+			printf("Got message LOCAL_POSITION_NED (spec: https://mavlink.io/en/messages/common.html#LOCAL_POSITION_NED)\n");
+
+			static int i = 0;
+			jour.Set("t", to_string(pos.time_boot_ms))
+				.Set("x", to_string(pos.x))
+				.Set("y", to_string(pos.y))
+				.Set("z", to_string(pos.z))
+				.Set("vx", to_string(pos.vx))
+				.Set("vy", to_string(pos.vy))
+				.Set("vz", to_string(pos.vz))
+				.Print();
+		}
+	}
+
+	/* printf("READ SOME MESSAGES \n");
 
 	for (auto i = 0; i < 20; ++i)
 	{
 
-	// copy current messages
-	Mavlink_Messages messages = api.current_messages;
+		// copy current messages
+		Mavlink_Messages messages = api.current_messages;
 
-	// local position in ned frame
-	mavlink_local_position_ned_t pos = messages.local_position_ned;
-	printf("Got message LOCAL_POSITION_NED (spec: https://mavlink.io/en/messages/common.html#LOCAL_POSITION_NED)\n");
-	printf("    pos  (NED):  %f %f %f (m)\n", pos.x, pos.y, pos.z );
+		// local position in ned frame
+		mavlink_local_position_ned_t pos = messages.local_position_ned;
+		printf("Got message LOCAL_POSITION_NED (spec: https://mavlink.io/en/messages/common.html#LOCAL_POSITION_NED)\n");
+		printf("    pos  (NED):  %f %f %f (m)\n", pos.x, pos.y, pos.z);
 
-	// hires imu
-	mavlink_highres_imu_t imu = messages.highres_imu;
-	printf("Got message HIGHRES_IMU (spec: https://mavlink.io/en/messages/common.html#HIGHRES_IMU)\n");
-	printf("    ap time:     %lu \n", imu.time_usec);
-	printf("    acc  (NED):  % f % f % f (m/s^2)\n", imu.xacc , imu.yacc , imu.zacc );
-	printf("    gyro (NED):  % f % f % f (rad/s)\n", imu.xgyro, imu.ygyro, imu.zgyro);
-	printf("    mag  (NED):  % f % f % f (Ga)\n"   , imu.xmag , imu.ymag , imu.zmag );
-	printf("    baro:        %f (mBar) \n"  , imu.abs_pressure);
-	printf("    altitude:    %f (m) \n"     , imu.pressure_alt);
-	printf("    temperature: %f C \n"       , imu.temperature );
+		// hires imu
+		mavlink_highres_imu_t imu = messages.highres_imu;
+		printf("Got message HIGHRES_IMU (spec: https://mavlink.io/en/messages/common.html#HIGHRES_IMU)\n");
+		printf("    ap time:     %lu \n", imu.time_usec);
+		printf("    acc  (NED):  % f % f % f (m/s^2)\n", imu.xacc, imu.yacc, imu.zacc);
+		printf("    gyro (NED):  % f % f % f (rad/s)\n", imu.xgyro, imu.ygyro, imu.zgyro);
+		printf("    mag  (NED):  % f % f % f (Ga)\n", imu.xmag, imu.ymag, imu.zmag);
+		printf("    baro:        %f (mBar) \n", imu.abs_pressure);
+		printf("    altitude:    %f (m) \n", imu.pressure_alt);
+		printf("    temperature: %f C \n", imu.temperature);
 
-	printf("\n");
-	sleep(1);
-	}
-
-
+		printf("\n");
+		sleep(1);
+	} */
 
 	// --------------------------------------------------------------------------
 	//   END OF COMMANDS
 	// --------------------------------------------------------------------------
 
 	return;
-
 }
-
 
 // ------------------------------------------------------------------------------
 //   Parse Command Line
 // ------------------------------------------------------------------------------
 // throws EXIT_FAILURE if could not open the port
-void
-parse_commandline(int argc, char **argv, char *&uart_name, int &baudrate,
-		bool &use_udp, char *&udp_ip, int &udp_port, bool &autotakeoff)
+void parse_commandline(int argc, char **argv, char *&uart_name, int &baudrate,
+					   bool &use_udp, char *&udp_ip, int &udp_port, bool &autotakeoff)
 {
 
 	// string for command line usage
 	const char *commandline_usage = "usage: mavlink_control [-d <devicename> -b <baudrate>] [-u <udp_ip> -p <udp_port>] [-a ]";
 
 	// Read input arguments
-	for (int i = 1; i < argc; i++) { // argv[0] is "mavlink"
+	for (int i = 1; i < argc; i++)
+	{ // argv[0] is "mavlink"
 
 		// Help
-		if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
-			printf("%s\n",commandline_usage);
+		if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0)
+		{
+			printf("%s\n", commandline_usage);
 			throw EXIT_FAILURE;
 		}
 
 		// UART device ID
-		if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--device") == 0) {
-			if (argc > i + 1) {
+		if (strcmp(argv[i], "-d") == 0 || strcmp(argv[i], "--device") == 0)
+		{
+			if (argc > i + 1)
+			{
 				i++;
 				uart_name = argv[i];
-			} else {
-				printf("%s\n",commandline_usage);
+			}
+			else
+			{
+				printf("%s\n", commandline_usage);
 				throw EXIT_FAILURE;
 			}
 		}
 
 		// Baud rate
-		if (strcmp(argv[i], "-b") == 0 || strcmp(argv[i], "--baud") == 0) {
-			if (argc > i + 1) {
+		if (strcmp(argv[i], "-b") == 0 || strcmp(argv[i], "--baud") == 0)
+		{
+			if (argc > i + 1)
+			{
 				i++;
 				baudrate = atoi(argv[i]);
-			} else {
-				printf("%s\n",commandline_usage);
+			}
+			else
+			{
+				printf("%s\n", commandline_usage);
 				throw EXIT_FAILURE;
 			}
 		}
 
 		// UDP ip
-		if (strcmp(argv[i], "-u") == 0 || strcmp(argv[i], "--udp_ip") == 0) {
-			if (argc > i + 1) {
+		if (strcmp(argv[i], "-u") == 0 || strcmp(argv[i], "--udp_ip") == 0)
+		{
+			if (argc > i + 1)
+			{
 				i++;
 				udp_ip = argv[i];
 				use_udp = true;
-			} else {
-				printf("%s\n",commandline_usage);
+			}
+			else
+			{
+				printf("%s\n", commandline_usage);
 				throw EXIT_FAILURE;
 			}
 		}
 
 		// UDP port
-		if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--port") == 0) {
-			if (argc > i + 1) {
+		if (strcmp(argv[i], "-p") == 0 || strcmp(argv[i], "--port") == 0)
+		{
+			if (argc > i + 1)
+			{
 				i++;
 				udp_port = atoi(argv[i]);
-			} else {
-				printf("%s\n",commandline_usage);
+			}
+			else
+			{
+				printf("%s\n", commandline_usage);
 				throw EXIT_FAILURE;
 			}
 		}
 
 		// Autotakeoff
-		if (strcmp(argv[i], "-a") == 0 || strcmp(argv[i], "--autotakeoff") == 0) {
+		if (strcmp(argv[i], "-a") == 0 || strcmp(argv[i], "--autotakeoff") == 0)
+		{
 			autotakeoff = true;
 		}
-
 	}
 	// end: for each input argument
 
@@ -448,66 +498,64 @@ parse_commandline(int argc, char **argv, char *&uart_name, int &baudrate,
 	return;
 }
 
-
 // ------------------------------------------------------------------------------
 //   Quit Signal Handler
 // ------------------------------------------------------------------------------
 // this function is called when you press Ctrl-C
-void
-quit_handler( int sig )
+void quit_handler(int sig)
 {
 	printf("\n");
 	printf("TERMINATING AT USER REQUEST\n");
 	printf("\n");
 
 	// autopilot interface
-	try {
+	try
+	{
 		autopilot_interface_quit->handle_quit(sig);
 	}
-	catch (int error){}
+	catch (int error)
+	{
+	}
 
 	// port
-	try {
+	try
+	{
 		port_quit->stop();
 	}
-	catch (int error){}
+	catch (int error)
+	{
+	}
 
 	// end program here
 	exit(0);
-
 }
-
 
 // ------------------------------------------------------------------------------
 //   Main
 // ------------------------------------------------------------------------------
-int
-main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 	atexit(ExitHandler);
-    Receiver rec;
-    rec.SetAmplify(IF);
-    rec.SetFrequency(frequency);
-    rec.SetSamplerate(samplerate);
-    rec.StartRX();
-    sleep(1);
-    std::vector<double> data = rec.GetData();
-    rec.StopRX();
-    PrintSignal(data);
+	/* Receiver rec;
+	rec.SetAmplify(IF);
+	rec.SetFrequency(frequency);
+	rec.SetSamplerate(samplerate);
+	rec.StartRX();
+	sleep(1);
+	std::vector<double> data = rec.GetData();
+	rec.StopRX();
+	PrintSignal(data); */
 
 	// This program uses throw, wrap one big try/catch here
 	try
 	{
-		int result = top(argc,argv);
+		int result = top(argc, argv);
 		return result;
 	}
 
-	catch ( int error )
+	catch (int error)
 	{
-		fprintf(stderr,"mavlink_control threw exception %i \n" , error);
+		fprintf(stderr, "mavlink_control threw exception %i \n", error);
 		return error;
 	}
-
 }
-
-
