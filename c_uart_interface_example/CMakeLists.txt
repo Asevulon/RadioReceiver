@@ -43,7 +43,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
-target_link_libraries(${PROJECT_NAME} PUBLIC "CameraLib/libcamera")
+target_link_libraries(${PROJECT_NAME} PUBLIC "libcamera")
 
 
 
