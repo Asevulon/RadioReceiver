@@ -353,6 +353,7 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 		{
 			camera_save_image("123.png");
 
+			Mavlink_Messages messages = api.current_messages;
 			mavlink_local_position_ned_t pos = messages.local_position_ned;
 			printf("Got message LOCAL_POSITION_NED (spec: https://mavlink.io/en/messages/common.html#LOCAL_POSITION_NED)\n");
 
