@@ -61,7 +61,7 @@
 #include <complex.h>
 #include <stdint.h>
 
-//#include "camera.h"
+#include "camera.h"
 #include "Receiver.h"
 #include "Journal.h"
 #include "Detecter.h"
