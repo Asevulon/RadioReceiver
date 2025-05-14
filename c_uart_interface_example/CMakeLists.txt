@@ -10,6 +10,8 @@ set(CMAKE_FIND_LIBRARY_SUFFIXES ".so;.a")
 set(CMAKE_EXECUTABLE_SUFFIX ".bin")
 set(CMAKE_DEBUG_POSTFIX d)
 
+set(OpenCV_DIR "/home/user/workspace/opencv_src/build4-full_armhf")
+
 set(SOURCES
     autopilot_interface.cpp
     mavlink_control.cpp
@@ -22,6 +24,7 @@ set(SOURCES
 )
 
 include_directories(MyHackrf/inc)
+include_directories(CameraLib)
 include_directories(MyHackrf/libs/comphackrf/inc)
 
 find_library(HACKRF_LIB NAMES hackrf PATHS "MyHackrf/libs/comphackrf/build" NO_DEFAULT_PATH)
@@ -37,6 +40,10 @@ find_package(Threads REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${HACKRF_LIB} pthread)
 target_link_libraries(${PROJECT_NAME} PRIVATE Threads::Threads)
 target_link_libraries(${PROJECT_NAME} PRIVATE pthread)
+
+find_package(OpenCV REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+link_libraries( ${OpenCV_LIBS})
 
 
 
