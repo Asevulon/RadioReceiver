@@ -326,7 +326,7 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 	SignalEnergyDetecter det;
 	Journal jour;
 
-//	camera_init();
+	//	camera_init();
 
 	jour.Path("journal.txt");
 	jour.Start(
@@ -351,7 +351,12 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 		det.ProcessData();
 		if (det.GetLastResult())
 		{
-//			camera_save_image("123.png");
+			std::time_t time = std::time({});
+			char timeString[] = "yyyy-mm-ddThh:mm:ssZ";
+			std::strftime(timeString, sizeof(timeString), "%F-%T", std::gmtime(&time));
+			std::string filename = "journal/output-";
+			filename += timeString;
+			camera_save_image(filename);
 
 			Mavlink_Messages messages = api.current_messages;
 			mavlink_local_position_ned_t pos = messages.local_position_ned;

@@ -66,7 +66,7 @@ const int frequency = 935e6;
 const int BB = 20;
 const int IF = 16;
 
-/*
+
 int main(int argc, char** argv)
 {
     atexit(ExitHandler);
@@ -110,8 +110,7 @@ int main(int argc, char** argv)
     ErrorHandler(result);
     result = hackrf_exit();
     ErrorHandler(result);
-    ExitReached = true; // 
-    return 0;
+    ExitReached = true; */ 
+    return 0; 
 }
 
-*/

@@ -1,5 +1,5 @@
-#include <opencv2/opencv.hpp>
-#include <opencv2/videoio.hpp>
+#include <opencv4/opencv2/opencv.hpp>
+#include <opencv4/opencv2/videoio.hpp>
 
 #include <ctime>
 #include <iostream>
@@ -10,8 +10,17 @@ using namespace cv;
 
 static VideoCapture cap;
 
-void camera_init();
+void camera_init() { cap = VideoCapture(0); };
 
-void camera_save_image(std::string filename);
+void camera_save_image(std::string filename)
+{
+    Mat image;
+    cap >> image;
 
-void camera_stop();
+    imwrite(filename + ".png", image);
+};
+
+void camera_stop()
+{
+    cap.release();
+};
