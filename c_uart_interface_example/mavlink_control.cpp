@@ -326,7 +326,7 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 	SignalEnergyDetecter det;
 	Journal jour;
 
-	//	camera_init();
+	camera_init();
 
 	jour.Path("journal.txt");
 	jour.Start(
