@@ -16,6 +16,11 @@ void camera_save_image(std::string filename)
 {
     Mat image;
     cap >> image;
+    if (image.empty())
+    {
+        std::cout << "ERROR! Empty image!" << std::endl;
+        return;
+    }
 
     imwrite(filename + ".png", image);
 };
