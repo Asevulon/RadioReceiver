@@ -14,9 +14,14 @@ void camera_init() { cap = VideoCapture(0); };
 
 void camera_save_image(std::string filename)
 {
+    std::cout << "filename: " << filename << std::endl;
     Mat image;
     cap >> image;
-
+    if (image.empty())
+    {
+        std::cout << "ERROR! CAMERA IMAGE IS EMPTY!" << std::endl;
+        return;
+    }
     imwrite(filename + ".png", image);
 };
 

@@ -1,3 +1,4 @@
+
 /****************************************************************************
  *
  *   Copyright (c) 2014 MAVlink Development Team. All rights reserved.
@@ -326,7 +327,7 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 	SignalEnergyDetecter det;
 	Journal jour;
 
-	//	camera_init();
+	camera_init();
 
 	jour.Path("journal.txt");
 	jour.Start(
@@ -344,6 +345,7 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 	rec.SetSamplerate(samplerate);
 	rec.StartRX();
 	sleep(1);
+        bool flag_start = 0;
 	while (true)
 	{
 		std::vector<double> data = rec.GetData();
@@ -351,17 +353,22 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 		det.ProcessData();
 		if (det.GetLastResult())
 		{
+                        if (flag_start)
+                        {
+                            jour.Continue();
+                        }
+                        flag_start = 1;
 			std::time_t time = std::time({});
 			char timeString[] = "yyyy-mm-ddThh:mm:ssZ";
 			std::strftime(timeString, sizeof(timeString), "%F-%T", std::gmtime(&time));
-			std::string filename = "journal/output-";
+			std::string filename = "logs/output-";
 			filename += timeString;
 			camera_save_image(filename);
 
 			Mavlink_Messages messages = api.current_messages;
 			mavlink_local_position_ned_t pos = messages.local_position_ned;
 			printf("Got message LOCAL_POSITION_NED (spec: https://mavlink.io/en/messages/common.html#LOCAL_POSITION_NED)\n");
-
+			std::cout << "t: " << pos.time_boot_ms << std::endl;
 			static int i = 0;
 			jour.Set("t", to_string(pos.time_boot_ms))
 				.Set("x", to_string(pos.x))
@@ -371,8 +378,12 @@ void commands(Autopilot_Interface &api, bool autotakeoff)
 				.Set("vy", to_string(pos.vy))
 				.Set("vz", to_string(pos.vz))
 				.Print();
+		jour.Pause();
+		
 		}
 	}
+
+        jour.End();
 
 	/* printf("READ SOME MESSAGES \n");
 

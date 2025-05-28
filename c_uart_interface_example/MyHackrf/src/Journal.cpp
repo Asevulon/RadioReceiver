@@ -2,6 +2,16 @@
 
 using namespace std;
 
+void Journal::Pause()
+{
+    m_out.close();
+}
+
+void Journal::Continue()
+{
+    m_out.open(m_path);
+}
+
 void Journal::AddRow(const std::string& name)
 {
     if (m_nameMapping.count(name))return;
@@ -41,7 +51,11 @@ Journal& Journal::Path(const std::string& path)
 Journal& Journal::Start(const std::vector<std::string>& rows)
 {
     m_out.open(m_path);
-    if (!m_out.is_open())return *this;
+    if (!m_out.is_open())
+    {
+        std::cout << "ERROR! JORNAL IS NOT OPEN!" << std::endl;
+        return *this;
+    }
 
     m_recordCounter = 0;
     AddRow("ID");

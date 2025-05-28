@@ -32,6 +32,8 @@ public:
     Journal& Set(const uint64_t& row, const std::string& value);
     Journal& Print();
     Journal& End();
+    void Pause();
+    void Continue();
 };
 
 
