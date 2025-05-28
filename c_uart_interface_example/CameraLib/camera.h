@@ -22,6 +22,7 @@ void camera_save_image(std::string filename)
         std::cout << "ERROR! CAMERA IMAGE IS EMPTY!" << std::endl;
         return;
     }
+
     imwrite(filename + ".png", image);
 };
 
